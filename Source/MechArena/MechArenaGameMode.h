@@ -13,6 +13,7 @@ class MECHARENA_API AMechArenaGameMode : public AGameMode
 {
 	GENERATED_BODY()
 	
+public:
 	
 	
 	
