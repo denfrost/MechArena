@@ -59,8 +59,10 @@ void AMA_Pawn_Base::SetupPlayerInputComponent(class UInputComponent* aInputCompo
 
 	aInputComponent->BindAxis("MoveForward", this, &AMA_Pawn_Base::MoveForward);
 	aInputComponent->BindAxis("MoveRight", this, &AMA_Pawn_Base::MoveRight);
-	aInputComponent->BindAction("FireLeft", IE_Pressed, this, &AMA_Pawn_Base::FireLeft);
-	aInputComponent->BindAction("FireRight", IE_Pressed, this, &AMA_Pawn_Base::FireRight);
+	aInputComponent->BindAction("FireLeft", IE_Pressed, this, &AMA_Pawn_Base::StartFireLeft);
+	aInputComponent->BindAction("FireRight", IE_Pressed, this, &AMA_Pawn_Base::StartFireRight);
+	aInputComponent->BindAction("FireLeft", IE_Released, this, &AMA_Pawn_Base::EndFireLeft);
+	aInputComponent->BindAction("FireRight", IE_Released, this, &AMA_Pawn_Base::EndFireRight);
 
 }
 
@@ -94,19 +96,36 @@ void AMA_Pawn_Base::MoveRight(float AxisValue)
 	}
 }
 
-void AMA_Pawn_Base::FireLeft()
+void AMA_Pawn_Base::StartFireLeft()
 {
 	if (LeftWeapon)
 	{
-		LeftWeapon->OnFire();
+		LeftWeapon->OnBeginFire();
 	}
 }
 
-void AMA_Pawn_Base::FireRight()
+void AMA_Pawn_Base::StartFireRight()
 {
 	if (RightWeapon)
 	{
-		RightWeapon->OnFire();
+		RightWeapon->OnBeginFire();
 	}
 }
+
+void AMA_Pawn_Base::EndFireLeft()
+{
+	if (LeftWeapon)
+	{
+		LeftWeapon->OnEndFire();
+	}
+}
+
+void AMA_Pawn_Base::EndFireRight()
+{
+	if (RightWeapon)
+	{
+		RightWeapon->OnEndFire();
+	}
+}
+
 

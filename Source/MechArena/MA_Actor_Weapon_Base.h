@@ -21,6 +21,10 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "MechArena Weapon")
-	void OnFire();
-	
+	void OnBeginFire();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "MechArena Weapon")
+	void OnEndFire();
+
+
 };

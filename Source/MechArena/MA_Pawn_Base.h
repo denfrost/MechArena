@@ -36,8 +36,14 @@ public:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 
-	void FireLeft();
-	void FireRight();
+	void StartFireLeft();
+	void StartFireRight();
+
+	void EndFireLeft();
+	void EndFireRight();
+
+	bool IsLeftWeaponFiring;
+	bool IsRightWeaponFiring;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
 	float RotationSlowFactor;
