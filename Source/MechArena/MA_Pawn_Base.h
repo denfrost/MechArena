@@ -36,6 +36,9 @@ public:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 
+	void AimForward(float AxisValue);
+	void AimRight(float AxisValue);
+
 	void StartFireLeft();
 	void StartFireRight();
 
@@ -50,6 +53,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
 	FVector FacingDirection;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	FVector AimingDirection;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
 	float MovementSpeed;

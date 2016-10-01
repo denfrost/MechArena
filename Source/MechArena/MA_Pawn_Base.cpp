@@ -59,6 +59,10 @@ void AMA_Pawn_Base::SetupPlayerInputComponent(class UInputComponent* aInputCompo
 
 	aInputComponent->BindAxis("MoveForward", this, &AMA_Pawn_Base::MoveForward);
 	aInputComponent->BindAxis("MoveRight", this, &AMA_Pawn_Base::MoveRight);
+
+	aInputComponent->BindAxis("AimForward", this, &AMA_Pawn_Base::AimForward);
+	aInputComponent->BindAxis("AimRight", this, &AMA_Pawn_Base::AimRight);
+
 	aInputComponent->BindAction("FireLeft", IE_Pressed, this, &AMA_Pawn_Base::StartFireLeft);
 	aInputComponent->BindAction("FireRight", IE_Pressed, this, &AMA_Pawn_Base::StartFireRight);
 	aInputComponent->BindAction("FireLeft", IE_Released, this, &AMA_Pawn_Base::EndFireLeft);
@@ -93,6 +97,22 @@ void AMA_Pawn_Base::MoveRight(float AxisValue)
 		{
 			FacingDirection.Y = AxisValue;
 		}
+	}
+}
+
+void AMA_Pawn_Base::AimForward(float AxisValue)
+{
+	if (FMath::Abs(AxisValue) > 0.1f)
+	{
+		AimingDirection.X = AxisValue;
+	}
+}
+
+void AMA_Pawn_Base::AimRight(float AxisValue)
+{
+	if (FMath::Abs(AxisValue) > 0.1f)
+	{
+		AimingDirection.Y = AxisValue;
 	}
 }
 
