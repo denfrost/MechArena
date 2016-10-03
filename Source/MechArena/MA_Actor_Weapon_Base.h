@@ -20,6 +20,12 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Weapon")
+	int32 AmmoCount;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MechArena Weapon")
+	int32 MaxAmmoCount;
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "MechArena Weapon")
 	void OnBeginFire();
 
