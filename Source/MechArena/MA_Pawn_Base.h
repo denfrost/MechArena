@@ -21,9 +21,6 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-
 	class UMA_Pawn_MovementComponent* MyMovementComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
@@ -33,17 +30,15 @@ public:
 
 	virtual UPawnMovementComponent* GetMovementComponent() const override;
 
-	void MoveForward(float AxisValue);
-	void MoveRight(float AxisValue);
+	void OnBeginFireLeftWeapon();
+	void OnBeginFireRightWeapon();
+	void OnEndFireLeftWeapon();
+	void OnEndFireRightWeapon();
 
-	void AimForward(float AxisValue);
-	void AimRight(float AxisValue);
-
-	void StartFireLeft();
-	void StartFireRight();
-
-	void EndFireLeft();
-	void EndFireRight();
+	void MoveForward(float aAxisValue);
+	void MoveRight(float aAxisValue);
+	void AimForward(float aAxisValue);
+	void AimRight(float aAxisValue);
 
 	bool IsLeftWeaponFiring;
 	bool IsRightWeaponFiring;

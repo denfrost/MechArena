@@ -12,8 +12,25 @@ UCLASS()
 class MECHARENA_API AMA_PlayerController_Base : public APlayerController
 {
 	GENERATED_BODY()
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class AMA_Pawn_Base* MyPawn;
+
+	virtual void SetupInputComponent() override;
+
+	virtual void Possess(APawn* aPawn) override;
 	
-	
-	
+	void MoveForward(float AxisValue);
+	void MoveRight(float AxisValue);
+
+	void AimForward(float AxisValue);
+	void AimRight(float AxisValue);
+
+	void StartFireLeft();
+	void StartFireRight();
+
+	void EndFireLeft();
+	void EndFireRight();
 	
 };

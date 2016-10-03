@@ -32,8 +32,6 @@ void AMA_Pawn_Base::Tick( float DeltaTime )
 	FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(FVector(0.0f), FacingDirection);
 
 	SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), targetRotation, DeltaTime, RotationSpeed));
-	
-	//SetActorRotation(FMath::Lerp(GetActorRotation(), targetRotation, RotationSpeed));
 
 	float rotDiff = FVector::DotProduct(FacingDirection.GetSafeNormal(), GetActorRotation().Vector());
 
@@ -52,71 +50,12 @@ void AMA_Pawn_Base::Tick( float DeltaTime )
 		
 }
 
-// Called to bind functionality to input
-void AMA_Pawn_Base::SetupPlayerInputComponent(class UInputComponent* aInputComponent)
-{
-	Super::SetupPlayerInputComponent(aInputComponent);
-
-	aInputComponent->BindAxis("MoveForward", this, &AMA_Pawn_Base::MoveForward);
-	aInputComponent->BindAxis("MoveRight", this, &AMA_Pawn_Base::MoveRight);
-
-	aInputComponent->BindAxis("AimForward", this, &AMA_Pawn_Base::AimForward);
-	aInputComponent->BindAxis("AimRight", this, &AMA_Pawn_Base::AimRight);
-
-	aInputComponent->BindAction("FireLeft", IE_Pressed, this, &AMA_Pawn_Base::StartFireLeft);
-	aInputComponent->BindAction("FireRight", IE_Pressed, this, &AMA_Pawn_Base::StartFireRight);
-	aInputComponent->BindAction("FireLeft", IE_Released, this, &AMA_Pawn_Base::EndFireLeft);
-	aInputComponent->BindAction("FireRight", IE_Released, this, &AMA_Pawn_Base::EndFireRight);
-
-}
-
 UPawnMovementComponent* AMA_Pawn_Base::GetMovementComponent() const
 {
 	return MyMovementComponent;
 }
 
-void AMA_Pawn_Base::MoveForward(float AxisValue)
-{
-	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent))
-	{
-		MyMovementComponent->AddInputVector(FVector::ForwardVector * AxisValue * MovementSpeed * RotationSlowFactor);
-		if (FMath::Abs(AxisValue) > 0.1f)
-		{
-			FacingDirection.X = AxisValue;
-		}
-		
-	}
-}
-
-void AMA_Pawn_Base::MoveRight(float AxisValue)
-{
-	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent))
-	{
-		MyMovementComponent->AddInputVector(FVector::RightVector * AxisValue * MovementSpeed * RotationSlowFactor);
-		if (FMath::Abs(AxisValue) > 0.1f)
-		{
-			FacingDirection.Y = AxisValue;
-		}
-	}
-}
-
-void AMA_Pawn_Base::AimForward(float AxisValue)
-{
-	if (FMath::Abs(AxisValue) > 0.1f)
-	{
-		AimingDirection.X = AxisValue;
-	}
-}
-
-void AMA_Pawn_Base::AimRight(float AxisValue)
-{
-	if (FMath::Abs(AxisValue) > 0.1f)
-	{
-		AimingDirection.Y = AxisValue;
-	}
-}
-
-void AMA_Pawn_Base::StartFireLeft()
+void AMA_Pawn_Base::OnBeginFireLeftWeapon()
 {
 	if (LeftWeapon)
 	{
@@ -124,7 +63,7 @@ void AMA_Pawn_Base::StartFireLeft()
 	}
 }
 
-void AMA_Pawn_Base::StartFireRight()
+void AMA_Pawn_Base::OnBeginFireRightWeapon()
 {
 	if (RightWeapon)
 	{
@@ -132,7 +71,7 @@ void AMA_Pawn_Base::StartFireRight()
 	}
 }
 
-void AMA_Pawn_Base::EndFireLeft()
+void AMA_Pawn_Base::OnEndFireLeftWeapon()
 {
 	if (LeftWeapon)
 	{
@@ -140,7 +79,7 @@ void AMA_Pawn_Base::EndFireLeft()
 	}
 }
 
-void AMA_Pawn_Base::EndFireRight()
+void AMA_Pawn_Base::OnEndFireRightWeapon()
 {
 	if (RightWeapon)
 	{
@@ -148,4 +87,44 @@ void AMA_Pawn_Base::EndFireRight()
 	}
 }
 
+void AMA_Pawn_Base::MoveForward(float aAxisValue)
+{
+	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent))
+	{
+		MyMovementComponent->AddInputVector(FVector::ForwardVector * aAxisValue * MovementSpeed * RotationSlowFactor);
+		if (FMath::Abs(aAxisValue) > 0.1f)
+		{
+			FacingDirection.X = aAxisValue;
+		}
+
+	}
+}
+
+void AMA_Pawn_Base::MoveRight(float aAxisValue)
+{
+	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent))
+	{
+		MyMovementComponent->AddInputVector(FVector::RightVector * aAxisValue * MovementSpeed * RotationSlowFactor);
+		if (FMath::Abs(aAxisValue) > 0.1f)
+		{
+			FacingDirection.Y = aAxisValue;
+		}
+	}
+}
+
+void AMA_Pawn_Base::AimForward(float aAxisValue)
+{
+	if (FMath::Abs(aAxisValue) > 0.1f)
+	{
+		AimingDirection.X = aAxisValue;
+	}
+}
+
+void AMA_Pawn_Base::AimRight(float aAxisValue)
+{
+	if (FMath::Abs(aAxisValue) > 0.1f)
+	{
+		AimingDirection.Y = aAxisValue;
+	}
+}
 
