@@ -62,5 +62,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
 	int32 StartingHealth;
-	
 };

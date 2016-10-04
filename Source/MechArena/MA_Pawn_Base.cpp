@@ -127,4 +127,3 @@ void AMA_Pawn_Base::AimRight(float aAxisValue)
 		AimingDirection.Y = aAxisValue;
 	}
 }
-
