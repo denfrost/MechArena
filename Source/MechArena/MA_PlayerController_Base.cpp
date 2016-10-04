@@ -24,6 +24,8 @@ void AMA_PlayerController_Base::SetupInputComponent()
 	InputComponent->BindAction("FireLeft", IE_Released, this, &AMA_PlayerController_Base::EndFireLeft);
 	InputComponent->BindAction("FireRight", IE_Released, this, &AMA_PlayerController_Base::EndFireRight);
 
+	InputComponent->BindAction("RespawnPawn", IE_Pressed, this, &AMA_PlayerController_Base::RespawnPawn);
+
 }
 
 void AMA_PlayerController_Base::Possess(APawn* aPawn)
@@ -100,4 +102,8 @@ void AMA_PlayerController_Base::EndFireRight()
 	}
 }
 
+void AMA_PlayerController_Base::RespawnPawn()
+{
+	OnRespawnPawn();
+}
 

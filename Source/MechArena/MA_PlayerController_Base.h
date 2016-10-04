@@ -32,5 +32,10 @@ public:
 
 	void EndFireLeft();
 	void EndFireRight();
+
+	void RespawnPawn();
+
+	UFUNCTION(BlueprintImplementableEvent, Category ="MechArena PC")
+	void OnRespawnPawn();
 	
 };
