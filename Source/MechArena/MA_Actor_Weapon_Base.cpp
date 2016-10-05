@@ -26,4 +26,8 @@ void AMA_Actor_Weapon_Base::Tick( float DeltaTime )
 
 }
 
+void AMA_Actor_Weapon_Base::ReplenishAmmo()
+{
+	AmmoCount = MaxAmmoCount;
+}
 

@@ -32,5 +32,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "MechArena Weapon")
 	void OnEndFire();
 
+	UFUNCTION(BlueprintCallable, Category = "MechArena")
+	void ReplenishAmmo();
 
 };
