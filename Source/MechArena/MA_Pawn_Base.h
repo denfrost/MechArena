@@ -23,6 +23,12 @@ public:
 
 	class UMA_Pawn_MovementComponent* MyMovementComponent;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "MechArena")
+	TSubclassOf<AMA_Actor_Weapon_Base> LeftStartingWeapon;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "MechArena")
+	TSubclassOf<AMA_Actor_Weapon_Base> RightStartingWeapon;
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
 	AMA_Actor_Weapon_Base* LeftWeapon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
