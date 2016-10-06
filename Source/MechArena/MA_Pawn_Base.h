@@ -40,27 +40,38 @@ public:
 	void AimForward(float aAxisValue);
 	void AimRight(float aAxisValue);
 
+	void Dash();
+
+	bool IsDashing;
+	float CurrentDashTime;
+	float CurrentDashCooldownRemaining;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
+	float DashDuration;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
+	float DashSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
+	float DashCooldown;
+
 	bool IsLeftWeaponFiring;
 	bool IsRightWeaponFiring;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
 	float RotationSlowFactor;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	FVector FacingDirection;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	FVector AimingDirection;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	float MovementSpeed;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	float RotationSpeed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	int32 Health;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	int32 StartingHealth;
 
 };

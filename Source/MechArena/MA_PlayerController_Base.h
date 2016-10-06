@@ -34,8 +34,12 @@ public:
 	void EndFireRight();
 
 	void RespawnPawn();
+	void Dash();
 
-	UFUNCTION(BlueprintImplementableEvent, Category ="MechArena PC")
+	UFUNCTION(BlueprintImplementableEvent, Category ="MechArena")
 	void OnRespawnPawn();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "MechArena")
+	void OnDash();
 	
 };

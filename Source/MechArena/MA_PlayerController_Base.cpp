@@ -25,6 +25,7 @@ void AMA_PlayerController_Base::SetupInputComponent()
 	InputComponent->BindAction("FireRight", IE_Released, this, &AMA_PlayerController_Base::EndFireRight);
 
 	InputComponent->BindAction("RespawnPawn", IE_Pressed, this, &AMA_PlayerController_Base::RespawnPawn);
+	InputComponent->BindAction("Dash", IE_Pressed, this, &AMA_PlayerController_Base::Dash);
 
 }
 
@@ -105,5 +106,13 @@ void AMA_PlayerController_Base::EndFireRight()
 void AMA_PlayerController_Base::RespawnPawn()
 {
 	OnRespawnPawn();
+}
+
+void AMA_PlayerController_Base::Dash()
+{
+	if (MyPawn)
+	{
+		MyPawn->Dash();
+	}
 }
 

@@ -21,6 +21,7 @@ void AMA_Pawn_Base::BeginPlay()
 	Super::BeginPlay();
 
 	Health = StartingHealth;
+	IsDashing = false;
 	
 }
 
@@ -29,23 +30,42 @@ void AMA_Pawn_Base::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(FVector(0.0f), FacingDirection);
+	CurrentDashCooldownRemaining -= DeltaTime;
 
-	SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), targetRotation, DeltaTime, RotationSpeed));
-
-	float rotDiff = FVector::DotProduct(FacingDirection.GetSafeNormal(), GetActorRotation().Vector());
-
-	if ( rotDiff >= 0.999f)
+	if (!IsDashing)
 	{
-		RotationSlowFactor = 1.0f;
-	}
-	else if (rotDiff > 0.8f)
-	{
-		RotationSlowFactor = 1.0f - rotDiff;
+		FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(FVector(0.0f), FacingDirection);
+
+		SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), targetRotation, DeltaTime, RotationSpeed));
+
+		float rotDiff = FVector::DotProduct(FacingDirection.GetSafeNormal(), GetActorRotation().Vector());
+
+		if (rotDiff >= 0.999f)
+		{
+			RotationSlowFactor = 1.0f;
+		}
+		else if (rotDiff > 0.8f)
+		{
+			RotationSlowFactor = 1.0f - rotDiff;
+		}
+		else
+		{
+			RotationSlowFactor = 0.0f;
+		}
 	}
 	else
 	{
-		RotationSlowFactor = 0.0f;
+		if (CurrentDashTime < 0.0f)
+		{
+			IsDashing = false;
+			CurrentDashCooldownRemaining = DashCooldown;
+		}
+		else
+		{
+			MyMovementComponent->AddInputVector(FacingDirection.GetSafeNormal() * DashSpeed);
+			CurrentDashTime -= DeltaTime;
+		}
+
 	}
 		
 }
@@ -89,7 +109,7 @@ void AMA_Pawn_Base::OnEndFireRightWeapon()
 
 void AMA_Pawn_Base::MoveForward(float aAxisValue)
 {
-	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent))
+	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent) && !IsDashing)
 	{
 		MyMovementComponent->AddInputVector(FVector::ForwardVector * aAxisValue * MovementSpeed * RotationSlowFactor);
 		if (FMath::Abs(aAxisValue) > 0.1f)
@@ -102,7 +122,7 @@ void AMA_Pawn_Base::MoveForward(float aAxisValue)
 
 void AMA_Pawn_Base::MoveRight(float aAxisValue)
 {
-	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent))
+	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent) && !IsDashing)
 	{
 		MyMovementComponent->AddInputVector(FVector::RightVector * aAxisValue * MovementSpeed * RotationSlowFactor);
 		if (FMath::Abs(aAxisValue) > 0.1f)
@@ -126,4 +146,21 @@ void AMA_Pawn_Base::AimRight(float aAxisValue)
 	{
 		AimingDirection.Y = aAxisValue;
 	}
+}
+
+void AMA_Pawn_Base::Dash()
+{
+	if (CurrentDashCooldownRemaining > 0.0f)
+	{
+		return;
+	}
+	// Get the rotation we are aiming for on the stick
+	FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(FVector(0.0f), FacingDirection);
+
+	// Switch to it immediately
+	SetActorRotation(targetRotation);
+
+	CurrentDashTime = DashDuration;
+	IsDashing = true;
+
 }
