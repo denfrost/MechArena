@@ -134,18 +134,12 @@ void AMA_Pawn_Base::MoveRight(float aAxisValue)
 
 void AMA_Pawn_Base::AimForward(float aAxisValue)
 {
-	if (FMath::Abs(aAxisValue) > 0.1f)
-	{
-		AimingDirection.X = aAxisValue;
-	}
+	AimingDirection.X = aAxisValue;
 }
 
 void AMA_Pawn_Base::AimRight(float aAxisValue)
 {
-	if (FMath::Abs(aAxisValue) > 0.1f)
-	{
-		AimingDirection.Y = aAxisValue;
-	}
+	AimingDirection.Y = aAxisValue;
 }
 
 void AMA_Pawn_Base::Dash()
