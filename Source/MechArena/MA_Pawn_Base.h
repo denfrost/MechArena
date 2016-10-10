@@ -75,9 +75,9 @@ public:
 	float RotationSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
-	int32 Health;
+	float Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
-	int32 StartingHealth;
+	float StartingHealth;
 
 };
