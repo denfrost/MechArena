@@ -58,9 +58,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	float DashCooldown;
 
-	//bool IsLeftWeaponFiring;
-	//bool IsRightWeaponFiring;
-
 	float RotationSlowFactor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")

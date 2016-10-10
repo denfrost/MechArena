@@ -34,9 +34,14 @@ void AMA_Pawn_Base::Tick( float DeltaTime )
 
 	if (!IsDashing)
 	{
-		FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(FVector(0.0f), FacingDirection);
+		MyMovementComponent->AddInputVector(FacingDirection * MovementSpeed * RotationSlowFactor);
 
-		SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), targetRotation, DeltaTime, RotationSpeed));
+		if (FacingDirection.Size() > 0.01f) {
+
+			FRotator targetRotation = UKismetMathLibrary::FindLookAtRotation(FVector(0.0f), FacingDirection);
+
+			SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), targetRotation, DeltaTime, RotationSpeed));
+		}
 
 		float rotDiff = FVector::DotProduct(FacingDirection.GetSafeNormal(), GetActorRotation().Vector());
 
@@ -109,27 +114,12 @@ void AMA_Pawn_Base::OnEndFireRightWeapon()
 
 void AMA_Pawn_Base::MoveForward(float aAxisValue)
 {
-	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent) && !IsDashing)
-	{
-		MyMovementComponent->AddInputVector(FVector::ForwardVector * aAxisValue * MovementSpeed * RotationSlowFactor);
-		if (FMath::Abs(aAxisValue) > 0.1f)
-		{
-			FacingDirection.X = aAxisValue;
-		}
-
-	}
+	FacingDirection.X = aAxisValue;
 }
 
 void AMA_Pawn_Base::MoveRight(float aAxisValue)
 {
-	if (MyMovementComponent && (MyMovementComponent->UpdatedComponent == RootComponent) && !IsDashing)
-	{
-		MyMovementComponent->AddInputVector(FVector::RightVector * aAxisValue * MovementSpeed * RotationSlowFactor);
-		if (FMath::Abs(aAxisValue) > 0.1f)
-		{
-			FacingDirection.Y = aAxisValue;
-		}
-	}
+	FacingDirection.Y = aAxisValue;
 }
 
 void AMA_Pawn_Base::AimForward(float aAxisValue)
