@@ -10,7 +10,15 @@ enum class EMA_PickupType : uint8
 {
 	Ammo 	UMETA(DisplayName = "Ammo"),
 	Health 	UMETA(DisplayName = "Health"),
-	Weapon	UMETA(DisplayName = "Weapon")
+	Weapon	UMETA(DisplayName = "Weapon"),
+	Any	    UMETA(DisplayName = "Any")
+};
+
+UENUM(BlueprintType)
+enum class EMA_WeaponType : uint8
+{
+	MachineGun 	UMETA(DisplayName = "MachineGun"),
+	Laser 	UMETA(DisplayName = "Laser")
 };
 
 UCLASS()
