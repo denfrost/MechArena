@@ -29,9 +29,9 @@ public:
 	TSubclassOf<AMA_Actor_Weapon_Base> RightStartingWeapon;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "MechArena")
 	AMA_Actor_Weapon_Base* LeftWeapon;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena Pawn")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "MechArena")
 	AMA_Actor_Weapon_Base* RightWeapon;
 
 	virtual UPawnMovementComponent* GetMovementComponent() const override;
@@ -60,11 +60,14 @@ public:
 
 	float RotationSlowFactor;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "MechArena")
 	FVector FacingDirection;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "MechArena")
 	FVector AimingDirection;
+
+	UPROPERTY(BlueprintReadOnly, Category = "MechArena")
+	FRotator TorsoRotator;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	float MovementSpeed;
@@ -77,4 +80,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MechArena")
 	float StartingHealth;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "MechArena")
+	void ReplenishAmmo();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "MechArena")
+	void ReplenishHealth(float aHealth);
 };

@@ -72,6 +72,12 @@ void AMA_Pawn_Base::Tick( float DeltaTime )
 		}
 
 	}
+	// Calculate the rotator for the torso section
+	if (AimingDirection.Size() > 0.01f)
+	{
+		FRotator lookRot = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), GetActorLocation() + AimingDirection);
+		TorsoRotator = UKismetMathLibrary::ComposeRotators(FRotator(0.0f, 90.0f, 0.0f), lookRot);
+	}
 		
 }
 
@@ -147,4 +153,24 @@ void AMA_Pawn_Base::Dash()
 	CurrentDashTime = DashDuration;
 	IsDashing = true;
 
+}
+
+void AMA_Pawn_Base::ReplenishAmmo_Implementation()
+{
+	if (LeftWeapon->IsValidLowLevel())
+	{
+		LeftWeapon->ReplenishAmmo();
+	}
+	if (RightWeapon->IsValidLowLevel())
+	{
+		RightWeapon->ReplenishAmmo();
+	}
+}
+
+void AMA_Pawn_Base::ReplenishHealth_Implementation(float aHealth)
+{
+	if (Health + aHealth < StartingHealth)
+	{
+		Health += aHealth;
+	}
 }
